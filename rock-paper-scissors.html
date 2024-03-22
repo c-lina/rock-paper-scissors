@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Rock Paper Scissors</title>
+    </head>
+    <script>
+    function getComputerChoice() {
+        let choice = ['Rock', 'Paper','Scissors'];
+        let num = Math.floor(Math.random() * 3);
+        return choice[num];
+    }
+
+    function capitalize(string) {
+        let first = string[0].toUpperCase();
+        for(x=1; x<string.length; x++) {
+            first = first + string[x].toLowerCase();
+        }
+        return first;
+    }
+
+    function playGame(computerSelection, playerSelection) {
+        let result= [];
+        let round;
+        let games = 1;
+        let winner;
+        let loser;
+        let final;
+        while (games <= 5) {
+            if (computerSelection == playerSelection) {
+                result.push('tie');
+                round = 'tie';
+            }
+            else if (computerSelection == 'Rock' && playerSelection == 'Scissors') {
+                result.push('lose');
+                round = 'lose';
+                loser++;
+            }
+            else if (computerSelection == 'Paper' && playerSelection == 'Rock') {
+                result.push('lose');
+                round = 'lose';
+                loser++;
+            }
+            else if (computerSelection == 'Scissors' && playerSelection == 'Paper') {
+                result.push('lose');
+                round = 'lose';
+                loser++;
+            }
+            else if (computerSelection == 'Rock' && playerSelection == 'Paper') {
+                result.push('win');
+                round = 'win';
+                winner++;
+            }
+            else if (computerSelection == 'Paper' && playerSelection == 'Scissors') {
+                result.push('win');
+                round = 'win';
+                winner++;
+            }
+            else if (computerSelection == 'Scissors' && playerSelection == 'Rock') {
+                result.push('win');
+                round = 'win';
+                winner++;
+            }
+            else {
+                round = 'invalid choice';
+            }
+            alert('Your choice: ' + playerSelection + '\nComputer Selection: ' + computerSelection + '\nResult: ' + round);
+            games++;
+            if(games <= 5) {
+                computerSelection = getComputerChoice();
+                playerSelection = capitalize(window.prompt("Do you want to choose rock, paper, or scissors?"));
+            }
+        }
+        if(winner == loser) {
+            final = 'tie';
+        }
+        else if(winner > loser) {
+            final = 'You win'
+        }
+        else {
+            final = 'You lose';
+        }
+        return final + ' (' + result + ')';
+    }
+
+    player = capitalize(window.prompt("Do you want to choose rock, paper, or scissors?"));
+    console.log(playGame(getComputerChoice(), player))
+
+    </script>
+</html>
