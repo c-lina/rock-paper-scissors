@@ -4,6 +4,18 @@
         <meta charset="UTF-8">
         <title>Rock Paper Scissors</title>
     </head>
+    <body>
+        <h1>Rock Paper Scissors</h1>
+        <img src="rock-paper-scissors.jpeg", alt="hand positions of rock, paper, and scissors", height="250">
+        <p></p>
+        <div id="choices">
+            <button id="Rock">Rock</button>
+            <button id="Paper">Paper</button>
+            <button id="Scissors">Scissors</button>
+        </div>
+        <div id=results></p>
+    </body>
+    
     <script>
     function getComputerChoice() {
         let choice = ['Rock', 'Paper','Scissors'];
@@ -11,80 +23,60 @@
         return choice[num];
     }
 
-    function capitalize(string) {
-        let first = string[0].toUpperCase();
-        for(x=1; x<string.length; x++) {
-            first = first + string[x].toLowerCase();
-        }
-        return first;
-    }
-
     function playGame(computerSelection, playerSelection) {
-        let result= [];
-        let round;
-        let games = 1;
-        let winner = 0;
-        let loser = 0;
-        let final;
-        while (games <= 5) {
-            if (computerSelection == playerSelection) {
-                result.push('tie');
-                round = 'tie';
-            }
-            else if (computerSelection == 'Rock' && playerSelection == 'Scissors') {
-                result.push('lose');
-                round = 'lose';
-                loser++;
-            }
-            else if (computerSelection == 'Paper' && playerSelection == 'Rock') {
-                result.push('lose');
-                round = 'lose';
-                loser++;
-            }
-            else if (computerSelection == 'Scissors' && playerSelection == 'Paper') {
-                result.push('lose');
-                round = 'lose';
-                loser++;
-            }
-            else if (computerSelection == 'Rock' && playerSelection == 'Paper') {
-                result.push('win');
-                round = 'win';
-                winner++;
-            }
-            else if (computerSelection == 'Paper' && playerSelection == 'Scissors') {
-                result.push('win');
-                round = 'win';
-                winner++;
-            }
-            else if (computerSelection == 'Scissors' && playerSelection == 'Rock') {
-                result.push('win');
-                round = 'win';
-                winner++;
-            }
-            else {
-                round = 'invalid choice';
-            }
-            alert('Your choice: ' + playerSelection + '\nComputer Selection: ' + computerSelection + '\nResult: ' + round);
-            games++;
-            if(games <= 5) {
-                computerSelection = getComputerChoice();
-                playerSelection = capitalize(window.prompt("Do you want to choose rock, paper, or scissors?"));
-            }
+        let round = "";
+        const computerDecision = document.createElement("p");
+        computerDecision.textContent = "Computer chose: " + computerSelection;
+        results.appendChild(computerDecision);
+        if (computerSelection == playerSelection) {
+            round = "tie";
         }
-        if(winner == loser) {
-            final = 'tie';
+        else if (computerSelection == 'Rock' && playerSelection == 'Scissors') {
+            round = "lose";
         }
-        else if(winner > loser) {
-            final = 'You win'
+        else if (computerSelection == 'Paper' && playerSelection == 'Rock') {
+            round = "lose";
         }
-        else {
-            final = 'You lose';
+        else if (computerSelection == 'Scissors' && playerSelection == 'Paper') {
+            round = "lose";
         }
-        return final + ' (' + result + ')';
+        else if (computerSelection == 'Rock' && playerSelection == 'Paper') {
+            round = "win";
+        }
+        else if (computerSelection == 'Paper' && playerSelection == 'Scissors') {
+            round = "win";
+        }
+        else if (computerSelection == 'Scissors' && playerSelection == 'Rock') {
+            round = "win";
+        }
+        const finalDecision = document.createElement("p");
+        finalDecision.textContent = round;
+        results.appendChild(finalDecision);
+        return(round);
     }
 
-    player = capitalize(window.prompt("Do you want to choose rock, paper, or scissors?"));
-    console.log(playGame(getComputerChoice(), player))
+    let playerScore = 0;
+    let computerScore = 0;
+
+    const results = document.querySelector("#results");
+    let playerChoice = document.querySelector("#choices");
+    playerChoice.addEventListener("click", (event) => {
+        let target = event.target;
+        const playerDecision = document.createElement("p");
+        switch(target.id) {
+            case 'Rock': 
+                playerDecision.textContent = "You chose: Rock";
+                break;
+            case 'Paper':
+                playerDecision.textContent = "You chose: Paper";
+                break;
+            case 'Scissors':
+                playerDecision.textContent = "You chose: Scissors";
+                break;
+        }
+        results.appendChild(playerDecision);
+        console.log(playGame(getComputerChoice(), target.id));
+    });
 
     </script>
 </html>
