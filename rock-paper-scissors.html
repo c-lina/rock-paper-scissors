@@ -6,17 +6,31 @@
     </head>
     <body>
         <h1>Rock Paper Scissors</h1>
-        <img src="rock-paper-scissors.jpeg", alt="hand positions of rock, paper, and scissors", height="250">
+        <img src="rock-paper-scissors.jpeg", alt="hand positions of rock, paper, and scissors", height="275">
         <p></p>
-        <div id="choices">
+        <div class="choices" id="choices">
             <button id="Rock">Rock</button>
             <button id="Paper">Paper</button>
             <button id="Scissors">Scissors</button>
         </div>
         <div id=results></p>
     </body>
-    
+    <style>
+        .choices {
+            display:flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            font-weight: 900;
+            font-size: medium;
+            gap: 75px;
+            margin-left: 115px;
+            margin-top: -40px;
+        }
+    </style>
     <script>
+    let computerScore = 0;
+    let playerScore = 0;
+
     function getComputerChoice() {
         let choice = ['Rock', 'Paper','Scissors'];
         let num = Math.floor(Math.random() * 3);
@@ -33,30 +47,37 @@
         }
         else if (computerSelection == 'Rock' && playerSelection == 'Scissors') {
             round = "lose";
+            computerScore++;
         }
         else if (computerSelection == 'Paper' && playerSelection == 'Rock') {
             round = "lose";
+            computerScore++;
         }
         else if (computerSelection == 'Scissors' && playerSelection == 'Paper') {
             round = "lose";
+            computerScore++;
         }
         else if (computerSelection == 'Rock' && playerSelection == 'Paper') {
             round = "win";
+            playerScore++;
         }
         else if (computerSelection == 'Paper' && playerSelection == 'Scissors') {
             round = "win";
+            playerScore++;
         }
         else if (computerSelection == 'Scissors' && playerSelection == 'Rock') {
             round = "win";
+            playerScore++;
         }
         const finalDecision = document.createElement("p");
         finalDecision.textContent = round;
         results.appendChild(finalDecision);
-        return(round);
-    }
 
-    let playerScore = 0;
-    let computerScore = 0;
+        const score = document.createElement("p");
+        score.textContent = "Player: " + playerScore + " | " + "Computer: " + computerScore;
+        results.appendChild(score);
+        return(null);
+    }
 
     const results = document.querySelector("#results");
     let playerChoice = document.querySelector("#choices");
@@ -75,7 +96,22 @@
                 break;
         }
         results.appendChild(playerDecision);
-        console.log(playGame(getComputerChoice(), target.id));
+        playGame(getComputerChoice(), target.id);
+        if(playerScore == 5 || computerScore == 5) {
+            document.getElementById("Rock").disabled = true;
+            document.getElementById("Paper").disabled = true;
+            document.getElementById("Scissors").disabled = true;
+
+            const winner = document.createElement("p");
+            if(playerScore == 5) {
+                winner.textContent = "You win!";
+            }
+            else {
+                winner.textContent = "You lose!";
+            }
+            winner.style.fontWeight = 900;
+            results.appendChild(winner);
+        }
     });
 
     </script>
